@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>GraveyardIdler</title>
+</head>
+
+<body style="margin: 0px; overflow: hidden;" oncontextmenu="return false;">
+  <canvas id="unity-canvas"
+    style="position: fixed; width: 100%; height: 100%; background: #231F20">
+  </canvas>
+
+  <div id="progress-bar" style="position: absolute; left: 0%; right: 100%; top: 49%; bottom: 49%; background-color: white;"></div>
+
+  <script src="Build/graveyard-idler-vk-direct-games.loader.js"></script>
+  <script>
+    const settings = {
+      dataUrl: "Build/941854d5ddf2ce0cd1a032b4eb22283f.data.unityweb",
+      frameworkUrl: "Build/bd0bee8435829b3d2c6ed5ce30021d5b.js.unityweb",
+      codeUrl: "Build/bb5531423d1f0525f50c8a1f81543d0e.wasm.unityweb",
+      streamingAssetsUrl: "StreamingAssets",
+      companyName: "Agava",
+      productName: "GraveyardIdler",
+      productVersion: "0.1",
+      matchWebGLToCanvasSize: true,
+    };
+
+    const progressBar = document.querySelector("#progress-bar");
+
+    setTimeout(() => {
+      createUnityInstance(document.querySelector("#unity-canvas"), settings, (progress) => {
+        progressBar.style.right = 100 * (1 - progress) + "%";
+      }).then(() => {
+        progressBar.style.display = "none";
+      }).catch((message) => {
+        alert(message);
+      });
+    }, 500); // Wait half a second before loading. Makes page more responsive on reload.
+  </script>
+</body>
+
+</html>
